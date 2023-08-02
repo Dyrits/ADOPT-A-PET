@@ -11,18 +11,14 @@ const PetDetailsPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    async function getPetsData() {
-      try {
-        const petsData = await getPetDetails(id);
-        setData(petsData);
-        setError(false);
-      } catch (e) {
-        setError(true);
-      }
+    getPetDetails(id).then(petsData => {
+      setData(petsData);
+      setError(false);
+    }).catch(error => {
+      setError(true);
+    }).finally(() => {
       setLoading(false);
-    }
-
-    getPetsData();
+    });
   }, [id]);
 
   return (
@@ -31,7 +27,7 @@ const PetDetailsPage = () => {
         <h3>Loading...</h3>
       ) : error ? (
         <div>
-          {/* Redirect to /pet-details-not-found if there was an error! */}
+          <Navigate to="/not-found" />
         </div>
       ) : (
         <main>

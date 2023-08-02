@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 
 const Search = () => {
@@ -15,14 +15,14 @@ const Search = () => {
     timeout = setTimeout(() => {
       const searchQuery = {
         name: searchInputRef.current.value
-      }
+      };
 
-      const query = createSearchParams(searchQuery)
+      const query = createSearchParams(searchQuery);
 
       navigate({
         pathname: "/search",
         search: `?${query}`
-      })
+      });
     }, 500);
   };
 
