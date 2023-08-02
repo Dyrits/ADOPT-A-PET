@@ -1,33 +1,34 @@
 import React, { useRef } from 'react';
-// Import createSearchParams
-// Import useNavigate
+import { useNavigate, createSearchParams } from "react-router-dom";
 
 const Search = () => {
+  let timeout;
 
-  // get navigate function
-  const navigate = "REPLACE ME";
+  const navigate = useNavigate();
 
   const searchInputRef = useRef();
 
-  const onSearchHandler = (e) => {
-    e.preventDefault();
+  const onSearchHandler = (event) => {
+    event.preventDefault();
 
-    const searchQuery = {
-      name: searchInputRef.current.value
-    }
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      const searchQuery = {
+        name: searchInputRef.current.value
+      }
 
-    // use createSearchParams 
-    const query = "REPLACE ME";
+      const query = createSearchParams(searchQuery)
 
-    // imperatively redirect with useNavigate() returned function
+      navigate({
+        pathname: "/search",
+        search: `?${query}`
+      })
+    }, 500);
   };
 
   return (
-    <form onSubmit={onSearchHandler} className="search-form">
-      <input type="text" className="search" ref={searchInputRef} />
-      <button type="submit" className="search-button">
-        🔎
-      </button>
+    <form className="search-form">
+      <input type="text" className="search" ref={searchInputRef} placeholder="Search" onInput={onSearchHandler} />
     </form>
   );
 };
